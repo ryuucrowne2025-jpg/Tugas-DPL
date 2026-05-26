@@ -4,118 +4,129 @@ import '../controllers/home_controller.dart';
 import '../models/alumni_model.dart';
 
 class TambahView extends StatelessWidget {
-  final HomeController c = Get.find<HomeController>();
+  TambahView({super.key});
 
-  final int? index;
-  final Alumni? data;
+  final HomeController controller = Get.find<HomeController>();
 
-  TambahView({this.index, this.data});
+  final TextEditingController namaController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController noHpController = TextEditingController();
+  final TextEditingController linkedinController = TextEditingController();
+  final TextEditingController instagramController = TextEditingController();
+  final TextEditingController facebookController = TextEditingController();
+  final TextEditingController tiktokController = TextEditingController();
+  final TextEditingController tempatKerjaController = TextEditingController();
+  final TextEditingController alamatKerjaController = TextEditingController();
+  final TextEditingController posisiController = TextEditingController();
+  final TextEditingController jenisController = TextEditingController();
+  final TextEditingController sosmedPerusahaanController =
+      TextEditingController();
 
-  final nama = TextEditingController();
-  final email = TextEditingController();
-  final noHp = TextEditingController();
-  final linkedin = TextEditingController();
-  final instagram = TextEditingController();
-  final facebook = TextEditingController();
-  final tiktok = TextEditingController();
-  final tempatKerja = TextEditingController();
-  final alamatKerja = TextEditingController();
-  final posisi = TextEditingController();
-  final jenis = TextEditingController();
-  final sosmedPerusahaan = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    if (data != null) {
-      nama.text = data!.nama;
-      email.text = data!.email;
-      noHp.text = data!.noHp;
-      linkedin.text = data!.linkedin;
-      instagram.text = data!.instagram;
-      facebook.text = data!.facebook;
-      tiktok.text = data!.tiktok;
-      tempatKerja.text = data!.tempatKerja;
-      alamatKerja.text = data!.alamatKerja;
-      posisi.text = data!.posisi;
-      jenis.text = data!.jenis;
-      sosmedPerusahaan.text = data!.sosmedPerusahaan;
-    }
-
     return Scaffold(
       appBar: AppBar(
-        title: Text(data == null ? 'Tambah Data' : 'Edit Data'),
+        title: const Text('Tambah Data Alumni'),
+        backgroundColor: Colors.green,
+        foregroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(20),
-        child: Column(
-          children: [
-            TextField(
-                controller: nama,
-                decoration: InputDecoration(labelText: 'Nama')),
-            TextField(
-                controller: email,
-                decoration: InputDecoration(labelText: 'Email')),
-            TextField(
-                controller: noHp,
-                decoration: InputDecoration(labelText: 'No HP')),
-            TextField(
-                controller: linkedin,
-                decoration: InputDecoration(labelText: 'LinkedIn')),
-            TextField(
-                controller: instagram,
-                decoration: InputDecoration(labelText: 'Instagram')),
-            TextField(
-                controller: facebook,
-                decoration: InputDecoration(labelText: 'Facebook')),
-            TextField(
-                controller: tiktok,
-                decoration: InputDecoration(labelText: 'TikTok')),
-            TextField(
-                controller: tempatKerja,
-                decoration: InputDecoration(labelText: 'Tempat Kerja')),
-            TextField(
-                controller: alamatKerja,
-                decoration: InputDecoration(labelText: 'Alamat Kerja')),
-            TextField(
-                controller: posisi,
-                decoration: InputDecoration(labelText: 'Posisi')),
-            TextField(
-                controller: jenis,
-                decoration: InputDecoration(labelText: 'Jenis')),
-            TextField(
-                controller: sosmedPerusahaan,
-                decoration: InputDecoration(labelText: 'Sosmed Perusahaan')),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                final dataBaru = Alumni(
-                  nama: nama.text,
-                  email: email.text,
-                  noHp: noHp.text,
-                  linkedin: linkedin.text,
-                  instagram: instagram.text,
-                  facebook: facebook.text,
-                  tiktok: tiktok.text,
-                  tempatKerja: tempatKerja.text,
-                  alamatKerja: alamatKerja.text,
-                  posisi: posisi.text,
-                  jenis: jenis.text,
-                  sosmedPerusahaan: sosmedPerusahaan.text,
-                );
-
-                if (index == null) {
-                  c.tambah(dataBaru);
-                } else {
-                  c.edit(index!, dataBaru);
-                }
-
-                Get.back();
-              },
-              child: Text(data == null ? 'Simpan' : 'Update'),
-            )
-          ],
+        padding: const EdgeInsets.all(16),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              _buildTextField(namaController, 'Nama Lengkap', Icons.person),
+              const SizedBox(height: 12),
+              _buildTextField(emailController, 'Email', Icons.email,
+                  keyboardType: TextInputType.emailAddress),
+              const SizedBox(height: 12),
+              _buildTextField(noHpController, 'No HP', Icons.phone,
+                  keyboardType: TextInputType.phone),
+              const SizedBox(height: 12),
+              _buildTextField(linkedinController, 'LinkedIn', Icons.work),
+              const SizedBox(height: 12),
+              _buildTextField(
+                  instagramController, 'Instagram', Icons.camera_alt),
+              const SizedBox(height: 12),
+              _buildTextField(facebookController, 'Facebook', Icons.facebook),
+              const SizedBox(height: 12),
+              _buildTextField(tiktokController, 'TikTok', Icons.music_note),
+              const SizedBox(height: 12),
+              _buildTextField(
+                  tempatKerjaController, 'Tempat Kerja', Icons.business),
+              const SizedBox(height: 12),
+              _buildTextField(
+                  alamatKerjaController, 'Alamat Kerja', Icons.location_on),
+              const SizedBox(height: 12),
+              _buildTextField(posisiController, 'Posisi', Icons.work_history),
+              const SizedBox(height: 12),
+              _buildTextField(jenisController, 'Jenis', Icons.category),
+              const SizedBox(height: 12),
+              _buildTextField(
+                  sosmedPerusahaanController, 'Sosmed Perusahaan', Icons.share),
+              const SizedBox(height: 24),
+              ElevatedButton(
+                onPressed: _saveAlumni,
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size(double.infinity, 50),
+                  backgroundColor: Colors.green,
+                  foregroundColor: Colors.white,
+                ),
+                child: const Text('Simpan Data'),
+              ),
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  Widget _buildTextField(
+    TextEditingController controller,
+    String label,
+    IconData icon, {
+    TextInputType keyboardType = TextInputType.text,
+  }) {
+    return TextFormField(
+      controller: controller,
+      decoration: InputDecoration(
+        labelText: label,
+        prefixIcon: Icon(icon),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+      ),
+      keyboardType: keyboardType,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return '$label tidak boleh kosong';
+        }
+        return null;
+      },
+    );
+  }
+
+  void _saveAlumni() {
+    if (_formKey.currentState!.validate()) {
+      final newAlumni = Alumni(
+        nama: namaController.text,
+        email: emailController.text,
+        noHp: noHpController.text,
+        linkedin: linkedinController.text,
+        instagram: instagramController.text,
+        facebook: facebookController.text,
+        tiktok: tiktokController.text,
+        tempatKerja: tempatKerjaController.text,
+        alamatKerja: alamatKerjaController.text,
+        posisi: posisiController.text,
+        jenis: jenisController.text,
+        sosmedPerusahaan: sosmedPerusahaanController.text,
+      );
+
+      controller.addAlumni(newAlumni);
+      Get.back();
+      Get.snackbar('Sukses', 'Data alumni berhasil ditambahkan');
+    }
   }
 }
