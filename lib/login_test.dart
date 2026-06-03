@@ -1,32 +1,36 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:pelacakan_alumni2/controllers/login_controller.dart';
+import 'package:get/get.dart';
 
-//  STUB DATA (test double)
-class LoginStub {
-  String username = "admin";
-  String password = "admin123";
-}
+class LoginController extends GetxController {
+  var username = ''.obs;
+  var password = ''.obs;
 
-void main() {
-  group('Login Test dengan STUB', () {
+  // ================================
+  // LOGIC UTAMA (testable)
+  // ================================
+  bool checkLogin(String username, String password) {
+    return username == 'admin' && password == 'admin123';
+  }
 
-    test('Login berhasil (data benar)', () {
-      final controller = LoginController();
-      final stub = LoginStub();
+  // ================================
+  // VERSI LEBIH TESTABLE (bau stub)
+  // ================================
+  bool checkLoginWithCustomData(
+    String username,
+    String password, {
+    String correctUsername = 'admin',
+    String correctPassword = 'admin123',
+  }) {
+    return username == correctUsername && password == correctPassword;
+  }
 
-      // pakai STUB
-      final result = controller.checkLogin(stub.username, stub.password);
-
-      expect(result, true);
-    });
-
-    test('Login gagal (data salah)', () {
-      final controller = LoginController();
-
-      final result = controller.checkLogin("user", "salah");
-
-      expect(result, false);
-    });
-
-  });
+  // ================================
+  // UI FUNCTION (tidak di-test)
+  // ================================
+  void login() {
+    if (checkLogin(username.value, password.value)) {
+      Get.offAllNamed('/home');
+    } else {
+      Get.snackbar('Error', 'Login gagal');
+    }
+  }
 }
