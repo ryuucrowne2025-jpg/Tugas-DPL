@@ -4,17 +4,27 @@ class LoginController extends GetxController {
   var username = ''.obs;
   var password = ''.obs;
 
-  //  LOGIC (bisa di-test)
+  // ===============================
+  // STUB FUNCTION (UNTUK TESTING)
+  // ===============================
   bool checkLogin(String username, String password) {
-    return username == 'admin' && password == 'admin123';
+    if (username == 'admin' && password == 'admin123') {
+      return true;
+    }
+    return false;
   }
 
-  //  UI (tidak di-test)
+  // ===============================
+  // IMPLEMENTASI LOGIN
+  // ===============================
   void login() {
-    if (checkLogin(username.value, password.value)) {
+    bool isValid = checkLogin(username.value, password.value);
+
+    if (isValid) {
+      Get.snackbar('Success', 'Login berhasil');
       Get.offAllNamed('/home');
     } else {
-      Get.snackbar('Error', 'Login gagal');
+      Get.snackbar('Error', 'Username atau Password salah');
     }
   }
 }
