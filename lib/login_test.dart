@@ -1,19 +1,37 @@
-import 'package:get/get.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:alumni_tracker/controllers/login_controller.dart';
 
-class LoginController extends GetxController {
-  var username = ''.obs;
-  var password = ''.obs;
+void main() {
+  late LoginController controller;
 
-  // TAMBAHAN (ini yang akan hijau)
-  bool checkLogin(String username, String password) {
-    return username == 'admin' && password == 'admin123';
-  }
+  setUp(() {
+    controller = LoginController();
+  });
 
-  void login() {
-    if (checkLogin(username.value, password.value)) {
-      Get.offAllNamed('/home');
-    } else {
-      Get.snackbar('Error', 'Login gagal');
-    }
-  }
+  test('Login berhasil jika username dan password benar', () {
+    bool result = controller.checkLogin(
+      'admin',
+      'admin123',
+    );
+
+    expect(result, true);
+  });
+
+  test('Login gagal jika username salah', () {
+    bool result = controller.checkLogin(
+      'user',
+      'admin123',
+    );
+
+    expect(result, false);
+  });
+
+  test('Login gagal jika password salah', () {
+    bool result = controller.checkLogin(
+      'admin',
+      'salah',
+    );
+
+    expect(result, false);
+  });
 }
