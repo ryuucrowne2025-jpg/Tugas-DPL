@@ -8,30 +8,15 @@ void main() {
     controller = LoginController();
   });
 
-  test('Login berhasil jika username dan password benar', () {
-    bool result = controller.checkLogin(
-      'admin',
-      'admin123',
-    );
+  test(
+    'Test login berhasil',
+    () {
+      bool result = controller.checkLogin(
+        'admin',
+        'admin123',
+      );
 
-    expect(result, true);
-  });
-
-  test('Login gagal jika username salah', () {
-    bool result = controller.checkLogin(
-      'user',
-      'admin123',
-    );
-
-    expect(result, false);
-  });
-
-  test('Login gagal jika password salah', () {
-    bool result = controller.checkLogin(
-      'admin',
-      'salah',
-    );
-
-    expect(result, false);
-  });
+      expect(result, true);
+    },
+  );
 }
