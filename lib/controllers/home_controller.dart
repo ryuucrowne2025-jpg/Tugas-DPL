@@ -6,12 +6,17 @@ abstract class AlumniRepository {
   Future<void> addAlumni(Alumni alumni);
   Future<void> deleteAlumni(String noHp);
 }
-
 class HomeController extends GetxController {
   final AlumniRepository repository;
+ HomeController({required this.repository});
+
   var alumniList = <Alumni>[].obs;
 
-  HomeController({required this.repository});
+ @override
+  void onInit() {
+    super.onInit();
+    loadAlumni();
+  }
 
   Future<void> loadAlumni() async {
     alumniList.value = await repository.fetchAllAlumni();
