@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
-import 'package:your_project_name/login_controller.dart'; 
+import 'package:your_project_name/controllers/login_controller.dart';
 
 void main() {
   setUpAll(() {
@@ -19,8 +19,8 @@ void main() {
       expect(result, isTrue);
     });
 
-    test('checkLogin returns false with invalid credentials', () {
-      final result = loginController.checkLogin('wrong_user', 'wrong_pass');
+     test('checkLogin returns false with invalid credentials', () {
+      final result = controller.checkLogin('user', '123');
       expect(result, isFalse);
     });
 
@@ -28,7 +28,7 @@ void main() {
       loginController.username.value = 'admin';
       loginController.password.value = 'admin123';
 
-      loginController.login();
+     controller.login();
 
       expect(loginController.username.value, 'admin');
       expect(loginController.password.value, 'admin123');
